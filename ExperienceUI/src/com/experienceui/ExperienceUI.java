@@ -6,6 +6,7 @@
 package com.experienceui;
 
 import com.experienceui.color.ColorUI;
+import com.experienceui.componentes.ExButton;
 import com.experienceui.componentes.ExComboBox;
 import com.experienceui.componentes.ExListBox;
 import com.experienceui.componentes.ExScrollPane;
@@ -25,6 +26,22 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class ExperienceUI {
 
     private static ColorUI colorUI;
+
+    public static ColorUI getColorUI() {
+        return colorUI;
+    }
+
+    public static void setColorUI(ColorUI aColorUI) {
+        colorUI = aColorUI;
+    }
+    private ExListBox exListBox;
+    private ExTabbedPane exTabbedPane;
+    private ExScrollPane exScrollPane;
+    private ExTable exTable;
+    private ExTextField exTextField;
+    private ExTextPane exTextPane;
+    private ExComboBox exComboBox;
+    private ExButton exButton;
 
     public ExperienceUI(ColorUI colorUI) {
         this.colorUI = colorUI;
@@ -48,9 +65,10 @@ public class ExperienceUI {
     }
 
     public void createIndependentUI() {
-        ExListBox exListBox = new ExListBox(colorUI);
-        ExTabbedPane exTabbedPane = new ExTabbedPane(colorUI);
-        ExScrollPane exScrollPane = new ExScrollPane(colorUI);
+        exListBox = new ExListBox(colorUI);
+        exTabbedPane = new ExTabbedPane(colorUI);
+        exScrollPane = new ExScrollPane(colorUI);
+        exButton = new ExButton(colorUI);
         
         exListBox.crearDisenio();
         exTabbedPane.crearDisenio();
@@ -58,14 +76,79 @@ public class ExperienceUI {
     }
 
     public void createDependentUI() {
-        ExTable exTable = new ExTable(colorUI);
-        ExTextField exTextField = new ExTextField(colorUI);
-        ExTextPane exTextPane = new ExTextPane(colorUI);
-        ExComboBox exComboBox = new ExComboBox(colorUI);
+        exTable = new ExTable(colorUI);
+        exTextField = new ExTextField(colorUI);
+        exTextPane = new ExTextPane(colorUI);
+        exComboBox = new ExComboBox(colorUI);
         exTable.crearDisenio();
         exTextField.crearDisenio();
         exTextPane.crearDisenio();
         exComboBox.crearDisenio();
     }
 
+    public ExListBox getExListBox() {
+        return exListBox;
+    }
+
+    public void setExListBox(ExListBox exListBox) {
+        this.exListBox = exListBox;
+    }
+
+    public ExTabbedPane getExTabbedPane() {
+        return exTabbedPane;
+    }
+
+    public void setExTabbedPane(ExTabbedPane exTabbedPane) {
+        this.exTabbedPane = exTabbedPane;
+    }
+
+    public ExScrollPane getExScrollPane() {
+        return exScrollPane;
+    }
+
+    public void setExScrollPane(ExScrollPane exScrollPane) {
+        this.exScrollPane = exScrollPane;
+    }
+
+    public ExTable getExTable() {
+        return exTable;
+    }
+
+    public void setExTable(ExTable exTable) {
+        this.exTable = exTable;
+    }
+
+    public ExTextField getExTextField() {
+        return exTextField;
+    }
+
+    public void setExTextField(ExTextField exTextField) {
+        this.exTextField = exTextField;
+    }
+
+    public ExTextPane getExTextPane() {
+        return exTextPane;
+    }
+
+    public void setExTextPane(ExTextPane exTextPane) {
+        this.exTextPane = exTextPane;
+    }
+
+    public ExComboBox getExComboBox() {
+        return exComboBox;
+    }
+
+    public void setExComboBox(ExComboBox exComboBox) {
+        this.exComboBox = exComboBox;
+    }
+
+    public ExButton getExButton() {
+        return exButton;
+    }
+
+    public void setExButton(ExButton exButton) {
+        this.exButton = exButton;
+    }
+
+    
 }

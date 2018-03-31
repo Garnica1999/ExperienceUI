@@ -9,8 +9,8 @@ import com.experienceui.color.ColorUI;
 import com.sun.glass.ui.Cursor;
 import java.awt.Font;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.plaf.ButtonUI;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -19,10 +19,11 @@ import javax.swing.plaf.basic.BasicButtonUI;
  *
  * @author Carlos
  */
-public class ExButton extends BasicButtonUI{
+public class ExButton extends BasicButtonUI implements IComponents{
     private static ColorUI colorUI;
     private Font fuente;
     private Border border;
+    
     public ExButton(ColorUI colorUI, int size) {
         this.colorUI = colorUI;
         fuente = new Font("Segoe UI", Font.BOLD, size);
@@ -53,14 +54,6 @@ public class ExButton extends BasicButtonUI{
     public static void setColorUI(ColorUI aColorUI) {
         colorUI = aColorUI;
     }
-    
-    public void modificarBoton(JButton bt){
-        bt.setFont(fuente);
-        bt.setBackground(this.colorUI.getColorFondo());
-        bt.setBackground(this.colorUI.getColorForeground());
-        bt.setBorder(border);
-        bt.setCursor(new java.awt.Cursor(Cursor.CURSOR_POINTING_HAND));
-    }
 
     public Font getFuente() {
         return fuente;
@@ -76,6 +69,20 @@ public class ExButton extends BasicButtonUI{
 
     public void setBorder(Border border) {
         this.border = border;
+    }
+
+    @Override
+    public void modificarUI(JComponent c) {
+        c.setFont(fuente);
+        c.setBackground(this.colorUI.getColorFondo());
+        c.setForeground(this.colorUI.getColorTerciario());
+        c.setBorder(border);
+        c.setCursor(new java.awt.Cursor(Cursor.CURSOR_POINTING_HAND));
+    }
+
+    @Override
+    public void crearDisenio() {
+        UIManager.put("Button.foreground", this.colorUI.getColorForeground());
     }
     
     

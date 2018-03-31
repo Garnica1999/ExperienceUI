@@ -17,7 +17,7 @@ import javax.swing.border.Border;
  *
  * @author sala7
  */
-public class ExTextField extends TextUtilities{
+public class ExTextField extends TextUtilities implements IComponents{
     private Font fuente;
     private Border border;
 
@@ -49,7 +49,7 @@ public class ExTextField extends TextUtilities{
         return new TextUtilities(colorUI);
     }
     
-    
+    @Override
     public void crearDisenio(){
         UIManager.put("TextField.border", this.border);
         UIManager.put("TextField.background", colorUI.getColorFondo());
@@ -57,9 +57,12 @@ public class ExTextField extends TextUtilities{
         UIManager.put("TextField.foreground", colorUI.getColorForeground());
     }
     
-    public void modificarUI(JTextField tf){
-        tf.setUI(this);
-        
+    @Override
+    public void modificarUI(JComponent c){
+        if(c instanceof JTextField){
+            JTextField tf = (JTextField)c;
+            tf.setUI(this);
+        }
     }
 
     public Font getFuente() {

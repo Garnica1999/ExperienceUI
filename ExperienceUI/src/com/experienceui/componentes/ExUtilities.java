@@ -130,7 +130,7 @@ public class ExUtilities {
         }
     }
     
-    public static void modificarTemaComboBox(ColorUI colorUI, JPanel... panel) throws IllegalArgumentException{
+    public static void modificarTemaComboBox(ExComboBox exComboBox, JPanel... panel) throws IllegalArgumentException{
         if (panel.length <= 0) {
             throw new IllegalArgumentException("El parametro de entrada debe de tener por lo menos uno o más elementos");
         }
@@ -139,7 +139,7 @@ public class ExUtilities {
             for (int i = 0; i < panel[k].getComponentCount(); i++) {
                 if (panel[k].getComponent(i) instanceof JComboBox) {
                     JComboBox cb = (JComboBox) panel[k].getComponent(i);
-                    cb.setUI(new ExComboBox(colorUI));
+                    cb.setUI(exComboBox);
                 }
 
             }
@@ -167,9 +167,9 @@ public class ExUtilities {
         return tm.getValueAt(tabla.getSelectedRow(), celda);
     }
     
-    public static void modificarElementos(ColorUI colorUI, JPanel panel){
+    public static void modificarElementos(ColorUI colorUI, ExComboBox exComboBox, JPanel panel){
         agregarFocusBorder(colorUI, panel);
-        modificarTemaComboBox(colorUI, panel);
+        modificarTemaComboBox(exComboBox, panel);
     }
     
     public static void modificarBotones(ExButton exButton, JPanel... pn) throws IllegalArgumentException{
@@ -181,11 +181,7 @@ public class ExUtilities {
             for(int componente = 0; componente < pn[i].getComponentCount(); componente++){
                 if(pn[i].getComponent(componente) instanceof JButton){
                     JButton bt = (JButton)pn[i].getComponent(componente);
-                    bt.setFont(exButton.getFuente());
-                    bt.setBackground(exButton.getColorUI().getColorFondo());
-                    bt.setBackground(exButton.getColorUI().getColorForeground());
-                    bt.setBorder(exButton.getBorder());
-                    bt.setCursor(new java.awt.Cursor(Cursor.CURSOR_POINTING_HAND));
+                    exButton.modificarUI(bt);
                 }
             }
         }

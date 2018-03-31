@@ -18,7 +18,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
  *
  * @author Carlos
  */
-public class ExTabbedPane extends BasicTabbedPaneUI{
+public class ExTabbedPane extends BasicTabbedPaneUI implements IComponents{
     private static ColorUI colorUI;
     private Font fuente;
 
@@ -43,6 +43,7 @@ public class ExTabbedPane extends BasicTabbedPaneUI{
         return new ExTabbedPane(colorUI);
     }
     
+    @Override
     public void crearDisenio(){
         UIManager.put("TabbedPane.focus", this.colorUI.getColorTerciario());
         UIManager.put("TabbedPane.selected", this.colorUI.getColorTerciario());
@@ -74,8 +75,13 @@ public class ExTabbedPane extends BasicTabbedPaneUI{
         this.fuente = fuente;
     }
     
-    public void modificarUI(JTabbedPane tp){
-        tp.setUI(this);
+    @Override
+    public void modificarUI(JComponent c){
+        if(c instanceof JTabbedPane){
+            JTabbedPane tp = (JTabbedPane)c;
+            tp.setUI(this);
+        }
+        
     }
     
     public void modificarUI(JTabbedPane... tps) throws IllegalArgumentException{

@@ -8,6 +8,7 @@ package com.experienceui.componentes;
 import com.experienceui.color.ColorUI;
 import java.awt.Insets;
 import javax.swing.JComponent;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.ScrollPaneUI;
 import javax.swing.plaf.basic.BasicScrollPaneUI;
@@ -16,7 +17,7 @@ import javax.swing.plaf.basic.BasicScrollPaneUI;
  *
  * @author Carlos
  */
-public class ExScrollPane extends BasicScrollPaneUI{
+public class ExScrollPane extends BasicScrollPaneUI implements IComponents{
     private static ColorUI colorUI;
 
     public ExScrollPane(ColorUI colorUI){
@@ -35,12 +36,18 @@ public class ExScrollPane extends BasicScrollPaneUI{
         return new ExScrollPane(colorUI);
     }
     
-    
+    @Override
     public void crearDisenio(){
         UIManager.put("ScrollPane.border", null);
         UIManager.put("ScrollPane.viewportBorder", null);
         UIManager.put("ScrollPane.viewportBorderInsets", new Insets(0,0,0,0));
     }
-    
-    
+
+    @Override
+    public void modificarUI(JComponent c) {
+        if(c instanceof JScrollPane){
+            JScrollPane js = (JScrollPane)c;
+            js.setUI(this);
+        }
+    }
 }

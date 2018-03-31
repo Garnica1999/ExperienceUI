@@ -24,7 +24,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Carlos
  */
-public class ExTable extends BasicTableUI{
+public class ExTable extends BasicTableUI implements IComponents{
     private static ColorUI colorUI;
     private Color gridColor;
     private Border cellBorder;
@@ -35,7 +35,7 @@ public class ExTable extends BasicTableUI{
     public ExTable(ColorUI colorUI) {
         this.colorUI = colorUI;
         gridColor = new Color(204,204,204);
-        cellBorder = BorderFactory.createLineBorder(this.colorUI.getColorBorde());
+        cellBorder = BorderFactory.createLineBorder(this.colorUI.getColorFondo());
         fuenteHeader = new Font("Segoe UI", Font.BOLD,14);
         scrollPaneBorder = BorderFactory.createLineBorder(this.colorUI.getColorBorde(),1);
         borderCellHightlight = BorderFactory.createEmptyBorder();
@@ -50,7 +50,7 @@ public class ExTable extends BasicTableUI{
         this.borderCellHightlight = borderCellHightlight;
     }
     
-    
+    @Override
     public void crearDisenio(){
         UIManager.put("Table.background", this.colorUI.getColorFondo());
         UIManager.put("Table.darkShadow", this.colorUI.getColorFondo());
@@ -66,6 +66,7 @@ public class ExTable extends BasicTableUI{
         UIManager.put("Table.light", colorUI.getColorFondo());
         UIManager.put("Table.highlight", colorUI.getColorFondo());
         UIManager.put("Table.selectionForeground", colorUI.getColorFondo());
+        UIManager.put("Table.selectionBackground", colorUI.getColorTerciario());
     }
     public static ColorUI getColorUI() {
         return colorUI;
@@ -130,20 +131,35 @@ public class ExTable extends BasicTableUI{
     }
     
         
-    public void modificarTabla(JTable tabla) {
-        modificarGridTabla(tabla);
-        modificarAlturaFilas(tabla);
-        renderizarTabla(tabla);
+    public static void modificarTabla(JTable... tabla) throws IllegalArgumentException{
+        if(tabla.length == 0){
+            throw new IllegalArgumentException("La función debe de tener uno o más parámetros de entrada que coincidan con la clase o clases padres de esta");
+        }
+        
+        for(int i = 0; i < tabla.length; i++){
+            modificarGridTabla(tabla[i]);
+            modificarAlturaFilas(tabla[i]);
+            renderizarTabla(tabla[i]);
+        }
+        
     }
 
-    public void modificarGridTabla(JTable tabla) {
+    public static void modificarGridTabla(JTable tabla) {
         ExTable.modificarGrid(tabla);
     }
 
-    public void renderizarTabla(JTable tabla) {
+    public static void renderizarTabla(JTable tabla) {
         tabla.setIntercellSpacing(new Dimension(0, 0));
         ExTable.CustomRenderer cr = new ExTable.CustomRenderer(tabla.getDefaultRenderer(Object.class), Color.WHITE, Color.WHITE, new Color(204, 204, 204), Color.WHITE);
         tabla.setDefaultRenderer(Object.class, cr);
+    }
+
+    @Override
+    public void modificarUI(JComponent c) {
+        if(c instanceof JTable){
+            JTable tb = (JTable)c;
+            tb.setUI(this);
+        }
     }
     
     @SuppressWarnings("serial")
@@ -171,7 +187,7 @@ public class ExTable extends BasicTableUI{
         }
 
         private void alinearElementos() {
-            render.setHorizontalAlignment(SwingConstants.RIGHT);
+            render.setHorizontalAlignment(SwingConstants.CENTER);
         }
 
         private void construirBorde(Color top, Color left, Color bottom, Color right) {

@@ -19,7 +19,7 @@ import javax.swing.plaf.basic.BasicTextPaneUI;
  *
  * @author Carlos
  */
-public class ExTextPane extends BasicTextPaneUI{
+public class ExTextPane extends BasicTextPaneUI implements IComponents{
     private static ColorUI colorUI;
     private Border border;
     private Font fuente;
@@ -40,6 +40,7 @@ public class ExTextPane extends BasicTextPaneUI{
         return new ExTextPane(colorUI);
     }
     
+    @Override
     public void crearDisenio(){
         UIManager.put("TextPane.border", border);
         UIManager.put("TextPane.background", this.colorUI.getColorFondo());
@@ -55,8 +56,12 @@ public class ExTextPane extends BasicTextPaneUI{
         colorUI = aColorUI;
     }
     
-    public void modificarUI(JTextPane tp){
-        tp.setUI(this);
+    @Override
+    public void modificarUI(JComponent c){
+        if (c instanceof JTextPane){
+            JTextPane tp = (JTextPane)c;
+            tp.setUI(this);
+        }
     }
 
     public Border getBorder() {

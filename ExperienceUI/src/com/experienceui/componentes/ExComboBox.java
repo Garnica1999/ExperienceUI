@@ -7,6 +7,7 @@ package com.experienceui.componentes;
 
 import com.experienceui.color.ColorUI;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.BorderFactory;
@@ -23,7 +24,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
  *
  * @author sala7
  */
-public class ExComboBox extends BasicComboBoxUI{
+public class ExComboBox extends BasicComboBoxUI implements IComponents{
     private static ColorUI colorUI;
     private Border borderButton;
     private Color buttonBackground;
@@ -32,13 +33,17 @@ public class ExComboBox extends BasicComboBoxUI{
     private Color selectionForeground;
     private Color selectionBackground;
     private Color control;
+    private Font fuente;
     
     public ExComboBox(ColorUI colorUI){
         ExComboBox.colorUI = colorUI;
         borderButton = BorderFactory.createMatteBorder(0, 0, 2, 0, colorUI.getColorBorde());
+        this.fuente = new Font("Segoe UI", Font.BOLD, 14);
+        selectionForeground = colorUI.getColorFondo();
+        selectionBackground = colorUI.getColorTerciario();
     }
 
-    public ExComboBox(ColorUI colorUI, Border borderButton, Color buttonBackground, Color buttonhighlight, Color buttonShadow, Color selectionForeground, Color selectionBackground, Color control) {
+    public ExComboBox(ColorUI colorUI, Border borderButton, Color buttonBackground, Color buttonhighlight, Color buttonShadow, Color selectionForeground, Color selectionBackground, Color control, Font fuente) {
         ExComboBox.colorUI = colorUI;
         this.borderButton = borderButton;
         this.buttonBackground = buttonBackground;
@@ -47,9 +52,11 @@ public class ExComboBox extends BasicComboBoxUI{
         this.selectionForeground = selectionForeground;
         this.selectionBackground = selectionBackground;
         this.control = control;
+        this.fuente = fuente;
     }
 
-    public ExComboBox(Color buttonBackground, Color buttonhighlight, Color buttonShadow, Color selectionForeground, Color selectionBackground, Color control) {
+    public ExComboBox(ColorUI colorUI, Color buttonBackground, Color buttonhighlight, Color buttonShadow, Color selectionForeground, Color selectionBackground, Color control) {
+        this.colorUI = colorUI;
         this.buttonBackground = buttonBackground;
         this.buttonhighlight = buttonhighlight;
         this.buttonShadow = buttonShadow;
@@ -57,6 +64,7 @@ public class ExComboBox extends BasicComboBoxUI{
         this.selectionBackground = selectionBackground;
         this.control = control;
         borderButton = BorderFactory.createMatteBorder(0, 0, 2, 0, colorUI.getColorBorde());
+        this.fuente = new Font("Segoe UI", Font.BOLD, 14);
     }
     
     public Border getBorderButton() {
@@ -130,8 +138,13 @@ public class ExComboBox extends BasicComboBoxUI{
         return a;
     }
 
-    public void modificarUI(JComboBox cb){
-        cb.setUI(this);
+    @Override
+    public void modificarUI(JComponent c){
+        if(c instanceof JComboBox){
+            JComboBox cb = (JComboBox)c;
+            cb.setUI(this);
+        }
+        
     }
     
      public static void addFocusBorder(JComboBox comboBox){
@@ -153,6 +166,7 @@ public class ExComboBox extends BasicComboBoxUI{
         componente.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, newColor));
     }
 
+    @Override
     public void crearDisenio(){
         UIManager.put("Combobox.rendererUseListColors", true);
         UIManager.put("ComboBox.background", colorUI.getColorFondo());
@@ -162,6 +176,7 @@ public class ExComboBox extends BasicComboBoxUI{
         //UIManager.put("ComboBox.buttonDarkShadow", new Color(255,255,255));
         UIManager.put("ComboBox.buttonHighlight", buttonhighlight);
         UIManager.put("ComboBox.buttonShadow", buttonShadow);
+        UIManager.put("ComboBox.font", fuente);
         UIManager.put("ComboBox.control", control);
         UIManager.put("ComboBox.selectionBackground", this.colorUI.getColorPrincipal());
         UIManager.put("ComboBox.selectionForeground", selectionForeground);

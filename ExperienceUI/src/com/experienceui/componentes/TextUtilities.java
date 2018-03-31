@@ -11,14 +11,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.plaf.basic.BasicTextPaneUI;
+import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.JTextComponent;
 
 /**
  *
  * @author sala7
  */
-public class TextUtilities extends BasicTextPaneUI{
+public class TextUtilities extends BasicTextFieldUI{
     protected static ColorUI colorUI;
 
     public TextUtilities() {
